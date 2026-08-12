@@ -4,6 +4,7 @@ x-moodle-env: &moodle-env
   MOODLE_DB_USER: moodle
   MOODLE_DB_PASSWORD: moodlepass
   MOODLE_WWWROOT: ${MOODLE_WWWROOT:-http://localhost:8080}
+  MOODLE_SSL_PROXY: ${MOODLE_SSL_PROXY:-0}
   MOODLE_DATAROOT: /var/www/moodledata
   MOODLE_DEBUG: "1"
 

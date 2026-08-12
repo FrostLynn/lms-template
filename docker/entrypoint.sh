@@ -23,6 +23,11 @@ $CFG->dboptions = ['dbport' => '', 'dbcollation' => 'utf8mb4_unicode_ci'];
 $CFG->wwwroot   = getenv('MOODLE_WWWROOT') ?: 'http://localhost:8080';
 $CFG->routerconfigured = true;
 
+// Di belakang reverse proxy HTTPS (mis. Nginx Proxy Manager).
+if (getenv('MOODLE_SSL_PROXY') === '1') {
+    $CFG->sslproxy = true;
+}
+
 // Data directory.
 $CFG->dataroot  = getenv('MOODLE_DATAROOT') ?: '/var/www/moodledata';
 $CFG->directorypermissions = 02777;

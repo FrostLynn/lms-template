@@ -61,3 +61,6 @@ jsconfig.json
 UPGRADING-CURRENT.md
 .phpunit.cache
 tsconfig.aliases.json
+# Docker Compose local overrides
+.env
+
