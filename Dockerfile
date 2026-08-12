@@ -9,6 +9,7 @@ FROM php:8.4-apache-bookworm
 RUN apt-get update && apt-get install -y --no-install-recommends \
         libicu-dev \
         libxml2-dev \
+        libxslt1-dev \
         libzip-dev \
         libpng-dev \
         libjpeg62-turbo-dev \
