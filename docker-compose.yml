@@ -3,18 +3,16 @@ x-moodle-env: &moodle-env
   MOODLE_DB_NAME: moodle
   MOODLE_DB_USER: moodle
   MOODLE_DB_PASSWORD: moodlepass
-  MOODLE_WWWROOT: http://localhost:8080
+  MOODLE_WWWROOT: ${MOODLE_WWWROOT:-http://localhost:8080}
   MOODLE_DATAROOT: /var/www/moodledata
   MOODLE_DEBUG: "1"
 
 services:
   web:
     image: ${MOODLE_IMAGE:-ghcr.io/frostlynn/lms-template:latest}
-    build:
-      context: .
     container_name: moodle-web
     ports:
-      - "8080:80"
+      - "${MOODLE_PORT:-8080}:80"
     volumes:
       - .:/var/www/html
       - moodledata:/var/www/moodledata
@@ -43,8 +41,6 @@ services:
 
   cron:
     image: ${MOODLE_IMAGE:-ghcr.io/frostlynn/lms-template:latest}
-    build:
-      context: .
     container_name: moodle-cron
     volumes:
       - .:/var/www/html
