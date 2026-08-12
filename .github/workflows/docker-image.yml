@@ -13,9 +13,10 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  # GHCR mewajibkan nama image lowercase — github.repository bisa mengandung
-  # huruf besar (mis. FrostLynn/lms-template), jadi di-lowercase dulu.
-  IMAGE_NAME: ${{ lower(github.repository) }}
+  # GHCR mewajibkan nama image lowercase. github.repository bisa mengandung
+  # huruf besar (mis. FrostLynn/lms-template), jadi dipetakan manual ke
+  # lowercase yang sudah pasti.
+  IMAGE_NAME: frostlynn/lms-template
 
 jobs:
   build:
