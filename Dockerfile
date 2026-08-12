@@ -17,6 +17,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         libcurl4-openssl-dev \
         libonig-dev \
         libmariadb-dev \
+        libsodium-dev \
         ghostscript \
         libxml2 \
         libxslt1.1 \
