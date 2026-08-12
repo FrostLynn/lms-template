@@ -1,0 +1,14 @@
+# Development override — build image lokal (tidak butuh GHCR).
+# Usage: docker compose -f docker-compose.yml -f docker-compose.dev.yml up -d
+services:
+  web:
+    image: moodle-dev:local
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+  cron:
+    image: moodle-dev:local
+    build:
+      context: .
+      dockerfile: Dockerfile

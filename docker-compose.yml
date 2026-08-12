@@ -1,0 +1,65 @@
+x-moodle-env: &moodle-env
+  MOODLE_DB_HOST: db
+  MOODLE_DB_NAME: moodle
+  MOODLE_DB_USER: moodle
+  MOODLE_DB_PASSWORD: moodlepass
+  MOODLE_WWWROOT: http://localhost:8080
+  MOODLE_DATAROOT: /var/www/moodledata
+  MOODLE_DEBUG: "1"
+
+services:
+  web:
+    image: ${MOODLE_IMAGE:-ghcr.io/frostlynn/lms-template:latest}
+    build:
+      context: .
+    container_name: moodle-web
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www/html
+      - moodledata:/var/www/moodledata
+    environment: *moodle-env
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+
+  db:
+    image: mariadb:10.11
+    container_name: moodle-db
+    environment:
+      MARIADB_DATABASE: moodle
+      MARIADB_USER: moodle
+      MARIADB_PASSWORD: moodlepass
+      MARIADB_ROOT_PASSWORD: rootpass
+    volumes:
+      - dbdata:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+  cron:
+    image: ${MOODLE_IMAGE:-ghcr.io/frostlynn/lms-template:latest}
+    build:
+      context: .
+    container_name: moodle-cron
+    volumes:
+      - .:/var/www/html
+      - moodledata:/var/www/moodledata
+    environment: *moodle-env
+    depends_on:
+      db:
+        condition: service_healthy
+    command: >
+      sh -c "while true; do
+        php admin/cli/cron.php --keep-alive=55;
+        sleep 5;
+      done"
+    restart: unless-stopped
+
+volumes:
+  moodledata:
+  dbdata:

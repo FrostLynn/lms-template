@@ -1,0 +1,14 @@
+.git
+.github
+.commandcode
+node_modules
+vendor
+*.md
+config.php
+moodledata
+.phpunit.cache
+.phpunit.result.cache
+.gitattributes
+.gitignore
+Dockerfile
+docker-compose.yml
